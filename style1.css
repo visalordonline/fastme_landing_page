@@ -1,0 +1,188 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #0B0F19;
+    color: #F3F4F6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    background: linear-gradient(135deg, #FF1493, #FF69B4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: #9CA3AF;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: #FF1493;
+}
+
+/* Buttons */
+.btn-primary, .btn-glow {
+    background: #FF1493;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: #DB2777;
+}
+
+.btn-secondary {
+    color: #9CA3AF;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.btn-secondary:hover {
+    color: #FF1493;
+}
+
+.btn-outline {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 20, 147, 0.3);
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-outline:hover {
+    background: rgba(255, 20, 147, 0.1);
+    border-color: #FF1493;
+}
+
+/* Hero Section */
+.badge {
+    display: inline-block;
+    background: rgba(255, 20, 147, 0.1);
+    border: 1px solid rgba(255, 20, 147, 0.3);
+    color: #FF69B4;
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #FF1493, #FF69B4, #DB2777);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Interactive Card */
+.glow-card {
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid rgba(255, 20, 147, 0.2);
+    box-shadow: 0 20px 40px rgba(255, 20, 147, 0.15);
+}
+
+/* Play Store Button */
+.btn-playstore {
+    background-color: #111827;
+    border: 1px solid rgba(255, 20, 147, 0.3);
+}
+
+.btn-playstore:hover {
+    border-color: #FF1493;
+    box-shadow: 0 0 20px rgba(255, 20, 147, 0.4);
+}
+
+/* Services Section */
+.section-badge {
+    background: rgba(255, 20, 147, 0.1);
+    border: 1px solid rgba(255, 20, 147, 0.3);
+    color: #FF69B4;
+}
+
+.service-container .service-card:hover {
+    border-color: #FF1493;
+    box-shadow: 0 10px 30px rgba(255, 20, 147, 0.15);
+}
+
+.service-container .service-card:hover .service-icon {
+    background: #FF1493;
+    border-color: #FF1493;
+}
+
+/* Pricing Section */
+.toggle-btn {
+    border: 2px solid #FF1493;
+    color: #FF1493;
+}
+
+.toggle-btn.active, .toggle-btn:hover {
+    background-color: #FF1493;
+    color: #fff;
+}
+
+.card-header.blue-theme { 
+    background-color: #FF1493; 
+}
+
+.card-header.orange-theme { 
+    background-color: #DB2777; 
+}
+
+.action-btn {
+    background-color: #FF1493;
+}
+
+.action-btn:hover {
+    background-color: #DB2777;
+}
+
+/* Footer & Other Accent Colors */
+.footer a:hover {
+    color: #FF1493;
+}
+
+/* Floating WhatsApp (Optional) */
+.whatsapp-float {
+    background: #25D366;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1.2rem 1.5rem;
+    }
+}
