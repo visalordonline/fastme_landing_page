@@ -425,26 +425,162 @@
             text-align: center;
             font-size: 0.95rem;
         }
+
+        .site-nav {
+            background: #fff;
+            border-bottom: 1px solid #f1e4eb;
+            position: relative;
+            z-index: 5;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            min-height: 76px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            color: var(--primary-pink);
+            font-size: 1.65rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 26px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #444;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-pink);
+        }
+
+        .nav-cta {
+            color: #fff !important;
+            background: var(--primary-pink);
+            padding: 10px 18px;
+            border-radius: 999px;
+        }
+
+        .hero-container {
+            min-height: 85vh;
+        }
+
+        .hero-content .badge {
+            letter-spacing: 0;
+        }
+
+        .hero-note {
+            display: block;
+            margin-top: 14px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .provider-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-pink);
+            text-decoration: none;
+        }
+
+        .testimonial-grid {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .testimonial-card {
+            border: 1px solid #f5d6e5;
+        }
+
+        .testimonial-card .story-icon {
+            color: var(--primary-pink);
+            font-size: 1.4rem;
+            margin-bottom: 18px;
+        }
+
+        .testimonial-card .story-role {
+            display: block;
+            margin-top: 22px;
+            color: var(--primary-pink);
+            font-size: 0.9rem;
+        }
+
+        .footer-content ul {
+            list-style: none;
+        }
+
+        .footer-content li {
+            margin: 8px 0;
+        }
+
+        @media (max-width: 720px) {
+            .nav-inner {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .nav-links {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 12px 20px;
+            }
+
+            .hero-container {
+                min-height: auto;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
 
+    <header class="site-nav">
+        <nav class="nav-inner" aria-label="Main navigation">
+            <a class="brand" href="index.html" aria-label="Fastme home">fastme<span aria-hidden="true">.</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="nav-cta" href="https://play.google.com/store/apps/details?id=com.fastme.app" target="_blank" rel="noopener noreferrer">Get Fastme</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <!-- HERO -->
     <main class="hero-container">
         <div class="hero-content">
-            <div class="badge">Fastme Software: Service Marketplace</div>
-            <h1>Find Trusted <br><span class="gradient-text">Local Professionals</span> Near You</h1>
-            <p>Fastme connects you instantly with verified plumbers, electricians, painters, cleaners, handymen, AC technicians and more. Book services, track live location, and get the job done with peace of mind.</p>
+            <div class="badge">Your AI-powered service connector</div>
+            <h1>Your service.<br><span class="gradient-text">Your location.</span><br>Your connection.</h1>
+            <p>Looking for a reliable local service—or ready to find more customers for your skills? Fastme brings customers and skilled professionals together, from plumbers and electricians to barbers, phone technicians and more.</p>
             
             <div class="cta-group">
-                <a href="https://play.google.com/store/apps/details?id=com.fastme.app" target="_blank" class="btn-playstore">
+                <a href="https://play.google.com/store/apps/details?id=com.fastme.app" target="_blank" rel="noopener noreferrer" class="btn-playstore">
                     <i class="fab fa-google-play icon-play"></i>
                     <div class="play-text">
                         <span>GET IT ON</span>
                         <strong>Google Play</strong>
                     </div>
                 </a>
-                <a href="https://apps.apple.com/app/fastme" target="_blank" class="btn-playstore" style="background: #555;">
+                <a href="https://apps.apple.com/app/fastme" target="_blank" rel="noopener noreferrer" class="btn-playstore" style="background: #555;">
                     <i class="fab fa-apple icon-play"></i>
                     <div class="play-text">
                         <span>DOWNLOAD ON</span>
@@ -452,7 +588,9 @@
                     </div>
                 </a>
                 <button onclick="document.getElementById('services').scrollIntoView({ behavior: 'smooth' })" class="btn-outline">Browse Services</button>
+                <a href="https://play.google.com/store/apps/details?id=com.fastme.app" target="_blank" rel="noopener noreferrer" class="btn-outline provider-link">Register as a provider</a>
             </div>
+            <small class="hero-note">Location sharing is used to help make nearby connections and should be enabled only when you choose.</small>
         </div>
 
         <div class="hero-visual">
@@ -483,7 +621,7 @@
             <div>
                 <h2 style="text-align:left; font-size:2.6rem;">Experience Fastme</h2>
                 <p style="font-size:1.2rem; color:#555; max-width:480px;">Book instantly, track live, and connect with professionals in Port Harcourt and beyond.</p>
-                
+
                 <div style="margin-top:40px;">
                     <div style="display:flex; gap:12px; flex-wrap:wrap;">
                         <div style="background:#fff; padding:12px 24px; border-radius:50px; box-shadow:0 4px 15px rgba(0,0,0,0.08); font-weight:600;">
@@ -495,9 +633,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="app-mockup">
-                <img src="/Screenshot_20260722_222158_Fastme.jpg" alt="Fastme App Screenshot">
+                <img src="ui.jpeg" alt="A preview of the Fastme mobile app">
             </div>
         </div>
     </section>
@@ -510,8 +648,10 @@
                 <h2>Trusted Service Marketplace</h2>
             </div>
             <p style="max-width:800px; margin:0 auto; text-align:center; font-size:1.2rem; color:#444;">
-                Fastme is a smart service marketplace app that connects customers with trusted local professionals for everyday home and business needs. 
-                We also specialize in building high-quality websites and mobile applications for businesses.
+                Fastme is a location-aware service marketplace built to make it easier for people to find skilled local help—and for skilled workers to be discovered by nearby customers. Our goal is to make getting connected feel simpler, more direct and more useful for everyone.
+            </p>
+            <p style="max-width:800px; margin:24px auto 0; text-align:center; font-size:1.05rem; color:#666;">
+                Fastme Software also creates digital products for businesses. <a href="fastme-software.html" style="color:var(--primary-pink); font-weight:700;">Explore our software services</a>.
             </p>
         </div>
     </section>
@@ -532,7 +672,7 @@
                 <div>
                     <i class="fas fa-map-marker-alt"></i>
                     <h3>Live Tracking</h3>
-                    <p>Real-time location updates during service.</p>
+                    <p>Location features can help customers and providers coordinate when enabled.</p>
                 </div>
                 <div>
                     <i class="fas fa-shield-alt"></i>
@@ -560,33 +700,33 @@
                 </div>
 
                 <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Phone Technicians</h3>
+                    <p>Find local help for phone repairs and everyday device issues.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-cut"></i></div>
+                    <h3>Barbers & Hairdressers</h3>
+                    <p>Connect with local grooming and hair-care professionals.</p>
+                </div>
+
+                <div class="service-card">
                     <div class="service-icon"><i class="fas fa-paint-roller"></i></div>
-                    <h3>Painting & Cleaning</h3>
-                    <p>Professional painters and cleaning services at your doorstep.</p>
+                    <h3>Painters & Cleaners</h3>
+                    <p>Discover people nearby for painting, cleaning and upkeep.</p>
                 </div>
 
                 <div class="service-card">
                     <div class="service-icon"><i class="fas fa-tools"></i></div>
-                    <h3>Handyman & Repairs</h3>
-                    <p>General repairs, carpentry, AC servicing and more.</p>
+                    <h3>Handymen & Repairers</h3>
+                    <p>Find practical help for repairs, maintenance and more.</p>
                 </div>
 
                 <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-code"></i></div>
-                    <h3>Website Development</h3>
-                    <p>Custom, fast and professional websites for your business.</p>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <h3>Mobile App Development</h3>
-                    <p>High-quality Android & iOS applications built for your needs.</p>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>Cyber Security</h3>
-                    <p>Protect your business and digital assets with expert solutions.</p>
+                    <div class="service-icon"><i class="fas fa-user-shield"></i></div>
+                    <h3>Security Services</h3>
+                    <p>Connect with local security and other skilled service providers.</p>
                 </div>
             </div>
         </div>
@@ -602,7 +742,7 @@
             <div class="portfolio-grid">
                 <div class="project-card">
                     <h3>Fastme Mobile App</h3>
-                    <p>Service booking & live tracking platform used daily in Port Harcourt.</p>
+                    <p>A location-aware service connector designed for customers and skilled workers.</p>
                 </div>
                 <div class="project-card">
                     <h3>Business Websites</h3>
@@ -620,17 +760,28 @@
     <section class="testimonials" style="background: #FFF0F5;">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">Testimonials</span>
-                <h2>What Our Users Say</h2>
+                <span class="section-badge">Made for real everyday needs</span>
+                <h2>Connections that make life easier</h2>
+                <p>Illustrative user stories—not customer reviews. We’ll share verified testimonials as they become available.</p>
             </div>
             <div class="testimonial-grid">
                 <div class="testimonial-card">
-                    <p>"I found a reliable plumber within minutes. The live tracking feature is excellent!"</p>
-                    <strong>- Chinedu O., Port Harcourt</strong>
+                    <div class="story-icon"><i class="fas fa-house"></i></div>
+                    <h3>When something needs fixing</h3>
+                    <p>Find nearby professionals for the jobs that keep a home or business running, and connect directly to discuss what you need.</p>
+                    <strong class="story-role">For customers</strong>
                 </div>
                 <div class="testimonial-card">
-                    <p>"Fastme built our company website and also helped us get more customers through their app."</p>
-                    <strong>- Sarah's Boutique</strong>
+                    <div class="story-icon"><i class="fas fa-briefcase"></i></div>
+                    <h3>When your skills deserve to be seen</h3>
+                    <p>Build a presence where local customers are looking, share what you do and make it easier for new people to reach you.</p>
+                    <strong class="story-role">For service providers</strong>
+                </div>
+                <div class="testimonial-card">
+                    <div class="story-icon"><i class="fas fa-location-dot"></i></div>
+                    <h3>When location matters</h3>
+                    <p>Discover services around you and coordinate a connection with location features that you control.</p>
+                    <strong class="story-role">For local communities</strong>
                 </div>
             </div>
         </div>
@@ -650,19 +801,24 @@
                     <li><a href="terms.html">Terms and Conditions</a></li>
                     <li><a href="policy.html">Privacy Policy</a></li>
                     <li><a href="director.html">Meet Our Founder</a></li>
+                    <li><a href="about.html">About Fastme</a></li>
+                    <li><a href="mission.html">Our Mission</a></li>
+                    <li><a href="fastme-software.html">Fastme Software</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
                 </ul>
             </div>
 
             <div>
                 <h3>Contact</h3>
                 <p>Email: <a href="mailto:info@fastme.org">info@fastme.org</a></p>
-                <p>Phone: 08160869969, 08021311787</p>
+                <p>Phone: <a href="tel:+2348160869969">08160869969</a>, <a href="tel:+2348021311787">08021311787</a></p>
                 <p>277 Ikwerre Road, Mile 4, Rumueme, Port Harcourt, Rivers State</p>
             </div>
              <div>
                 <h3>Fastme Software Ecosystem</h3>
-                <p>Explore our suite of tools and services designed to help you succeed.</p>
-            </div>
+                 <p>Explore our digital products and services.</p>
+                 <p><a href="fastme-software.html">Discover Fastme Software</a></p>
+             </div>
         </div>
 
         <div class="footer-bottom">
@@ -680,7 +836,7 @@
                     const y = e.clientY - rect.top;
                     card.style.transform = `perspective(1000px) rotateX(${(y - rect.height/2) / 15}deg) rotateY(${(rect.width/2 - x) / 15}deg)`;
                 });
-                
+
                 card.addEventListener('mouseleave', () => {
                     card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
                 });
