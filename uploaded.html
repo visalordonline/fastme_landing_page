@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Uploads & Scans - QR Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- QR Scanner Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f8;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .header h1 {
+      color: #333;
+      font-size: 28px;
+    }
+
+    .back-btn {
+      padding: 10px 20px;
+      background: #666;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .tabs {
+      display: flex;
+      background: white;
+      border-radius: 8px;
+      padding: 5px;
+      width: fit-content;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .tab {
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tab.active {
+      background: #0066ff;
+      color: white;
+    }
+
+    .controls {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .btn-primary { background: #0066ff; color: white; }
+    .btn-primary:hover { background: #004fcc; }
+    .btn-secondary { background: #666; color: white; }
+    .btn-secondary:hover { background: #555; }
+    .btn-danger { background: #dc3545; color: white; }
+    .btn-danger:hover { background: #c82333; }
+
+    .stats {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      flex: 1;
+      min-width: 150px;
+      text-align: center;
+      padding: 10px;
+      background: #f9f9f9;
+      border-radius: 6px;
+    }
+
+    .stat-number {
+      font-size: 28px;
+      font-weight: bold;
+      color: #0066ff;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+
+    .card-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #999;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .card-meta {
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .card-url {
+      background: #f5f5f5;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      word-break: break-all;
+      margin-bottom: 10px;
+      color: #0066ff;
+      cursor: pointer;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .card-actions button {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .btn-copy { background: #0066ff; color: white; }
+    .btn-open { background: #28a745; color: white; }
+    .btn-delete-item { background: #dc3545; color: white; }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .msg {
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .msg.show { display: block; }
+    .msg-success { background: #d4edda; color: #155724; }
+    .msg-error { background: #f8d7da; color: #721c24; }
+
+    @media (max-width: 768px) {
+      .gallery { grid-template-columns: 1fr; }
+      .header { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>📋 Manage Uploads & Scans</h1>
+      <a href="index.html" class="back-btn">← Back to QR Generator</a>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab(0)">All</div>
+      <div class="tab" onclick="switchTab(1)">Generated</div>
+      <div class="tab" onclick="switchTab(2)">Scanned</div>
+    </div>
+
+    <div id="message" class="msg"></div>
+
+    <div class="controls">
+      <input type="text" id="searchBox" class="search-box" placeholder="Search by content or date...">
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="startScanner()">📷 Scan QR Code</button>
+        <button class="btn btn-secondary" onclick="refreshUploads()">🔄 Refresh</button>
+        <button class="btn btn-danger" onclick="deleteAll()">🗑️ Delete All</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-number" id="totalCount">0</div>
+        <div class="stat-label">Total Items</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="generatedCount">0</div>
+        <div class="stat-label">Generated</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="scannedCount">0</div>
+        <div class="stat-label">Scanned</div>
+      </div>
+    </div>
+
+    <div id="loader" class="loader" style="display:none;">
+      <p>Loading...</p>
+    </div>
+
+    <div id="gallery" class="gallery"></div>
+
+    <div id="emptyState" class="empty-state" style="display: none;">
+      <h2>No items found</h2>
+      <p>Your generated and scanned QR codes will appear here.</p>
+    </div>
+  </div>
+
+  <!-- Scanner Modal -->
+  <div id="scannerModal" class="modal">
+    <div class="modal-content">
+      <h3>📷 Scan QR Code</h3>
+      <div id="reader" style="width:100%; margin: 15px 0;"></div>
+      <button class="btn btn-secondary" onclick="stopScanner()">Close Scanner</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, get, push, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCDfyVAhNfuXYyzeetQ1_wlFhz7-wXWHDk",
+      authDomain: "treasure-f5cc7.firebaseapp.com",
+      databaseURL: "https://treasure-f5cc7-default-rtdb.firebaseio.com",
+      projectId: "treasure-f5cc7",
+      storageBucket: "treasure-f5cc7.firebasestorage.app",
+      messagingSenderId: "726318121382",
+      appId: "1:726318121382:web:3cf5c5c7e628c9e313cf67"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    let allItems = [];
+    let currentTab = 'all';
+
+    async function loadItems() {
+      const loader = document.getElementById("loader");
+      loader.style.display = "block";
+
+      try {
+        const snapshot = await get(ref(db, "uploads"));
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          allItems = Object.entries(data).map(([id, item]) => ({
+            id,
+            ...item,
+            timestamp: item.timestamp || new Date().toISOString()
+          })).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        } else {
+          allItems = [];
+        }
+        renderGallery();
+        updateStats();
+      } catch (error) {
+        console.error(error);
+        showMessage("Failed to load items", "error");
+      } finally {
+        loader.style.display = "none";
+      }
+    }
+
+    function renderGallery() {
+      const gallery = document.getElementById("gallery");
+      const emptyState = document.getElementById("emptyState");
+
+      let filtered = allItems;
+
+      if (currentTab === 'generated') {
+        filtered = allItems.filter(item => item.source !== 'scanned');
+      } else if (currentTab === 'scanned') {
+        filtered = allItems.filter(item => item.source === 'scanned');
+      }
+
+      if (filtered.length === 0) {
+        gallery.innerHTML = "";
+        emptyState.style.display = "block";
+        return;
+      }
+
+      emptyState.style.display = "none";
+
+      gallery.innerHTML = filtered.map(item => `
+        <div class="card">
+          <div class="card-image">
+            ${item.type === 'image' ? 
+              `<img src="${item.url}" onerror="this.parentElement.innerHTML='Image not available'">` : 
+              `<div style="height:100%; display:flex; align-items:center; justify-content:center; background:#f8f9fa; color:#555; padding:20px; font-size:13px; text-align:center;">
+                ${item.url.length > 100 ? item.url.substring(0,100) + '...' : item.url}
+              </div>`}
+          </div>
+          <div class="card-body">
+            <div class="card-title">
+              ${item.source === 'scanned' ? '🔍 Scanned QR' : '📌 Generated QR'}
+            </div>
+            <div class="card-meta">${new Date(item.timestamp).toLocaleString()}</div>
+            <div class="card-url" onclick="copyToClipboard('${item.url.replace(/'/g, "\\'")}')">
+              ${item.url.substring(0, 60)}${item.url.length > 60 ? '...' : ''}
+            </div>
+            <div class="card-actions">
+              <button class="btn-copy" onclick="copyToClipboard('${item.url.replace(/'/g, "\\'")}')">📋 Copy</button>
+              <button class="btn-open" onclick="window.open('${item.url}', '_blank')">🔗 Open</button>
+              <button class="btn-delete-item" onclick="deleteItem('${item.id}')">🗑️ Delete</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function updateStats() {
+      const total = allItems.length;
+      const generated = allItems.filter(i => i.source !== 'scanned').length;
+      const scanned = allItems.filter(i => i.source === 'scanned').length;
+
+      document.getElementById("totalCount").textContent = total;
+      document.getElementById("generatedCount").textContent = generated;
+      document.getElementById("scannedCount").textContent = scanned;
+    }
+
+    // ================== QR SCANNER ==================
+    let html5QrCode = null;
+
+    window.startScanner = function() {
+      document.getElementById("scannerModal").classList.add("active");
+
+      const reader = document.getElementById("reader");
+      reader.innerHTML = "";
+
+      html5QrCode = new Html5Qrcode("reader");
+
+      html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: { width: 250, height: 250 } },
+        (decodedText) => {
+          stopScanner();
+          saveScannedResult(decodedText);
+        },
+        (errorMessage) => {}
+      ).catch(err => {
+        alert("Camera access failed: " + err);
+        stopScanner();
+      });
+    };
+
+    window.stopScanner = function() {
+      if (html5QrCode) {
+        html5QrCode.stop().then(() => {
+          document.getElementById("scannerModal").classList.remove("active");
+          html5QrCode = null;
+        });
+      } else {
+        document.getElementById("scannerModal").classList.remove("active");
+      }
+    };
+
+    async function saveScannedResult(scannedValue) {
+      try {
+        await push(ref(db, "uploads"), {
+          url: scannedValue,
+          type: scannedValue.startsWith("http") ? "link" : "text",
+          source: "scanned",
+          timestamp: new Date().toISOString()
+        });
+
+        showMessage("✅ Scanned successfully and saved!", "success");
+        loadItems();
+      } catch (e) {
+        showMessage("Failed to save scanned result", "error");
+      }
+    }
+
+
+async function deleteItem(id) {
+  if (!confirm("Delete this item permanently?")) return;
+
+  try {
+    // Get the item from Firebase first
+    const snapshot = await get(ref(db, `uploads/${id}`));
+
+    if (!snapshot.exists()) {
+      throw new Error("Item not found");
+    }
+
+    const item = snapshot.val();
+
+    /*
+      IMPORTANT:
+      Only delete from Cloudinary if this is an original
+      generated/uploaded image.
+
+      If this is a scanned QR, only delete the scanned
+      history from Firebase.
+    */
+    if (
+      item.source !== "scanned" &&
+      item.type === "image" &&
+      item.public_id
+    ) {
+      // Send the Cloudinary public_id to your secure backend
+      const response = await fetch(
+        "https://us-central1-treasure-f5cc7.cloudfunctions.net/deleteCloudinaryImage",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            public_id: item.public_id
+          })
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete image from Cloudinary");
+      }
+    }
+
+    // Delete the Firebase record
+    await remove(ref(db, `uploads/${id}`));
+
+    // Reload the list
+    await loadItems();
+
+    showMessage("Item permanently deleted", "success");
+
+  } catch (e) {
+    console.error("Delete error:", e);
+    showMessage("Delete failed: " + e.message, "error");
+  }
+}
+
+
+    window.copyToClipboard = function(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showMessage("Copied to clipboard!", "success");
+      });
+    };
+
+    window.refreshUploads = loadItems;
+
+    window.deleteAll = async function() {
+      if (confirm("⚠️ Delete ALL items? This cannot be undone!")) {
+        try {
+          const snapshot = await get(ref(db, "uploads"));
+          if (snapshot.exists()) {
+            const promises = Object.keys(snapshot.val()).map(id => 
+              remove(ref(db, `uploads/${id}`))
+            );
+            await Promise.all(promises);
+            showMessage("All items deleted", "success");
+            loadItems();
+          }
+        } catch (e) {
+          showMessage("Failed to delete all", "error");
+        }
+      }
+    };
+
+    window.switchTab = function(tab) {
+      currentTab = tab === 0 ? 'all' : tab === 1 ? 'generated' : 'scanned';
+      document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', i === tab));
+      renderGallery();
+    };
+
+    function showMessage(text, type) {
+      const msg = document.getElementById("message");
+      msg.textContent = text;
+      msg.className = `msg show msg-${type}`;
+      setTimeout(() => msg.classList.remove("show"), 4000);
+    }
+
+    // ================== FIX FOR DELETE BUTTON ==================
+    window.deleteItem = deleteItem;
+
+    // Load data when page opens
+    document.addEventListener("DOMContentLoaded", loadItems);
+  </script>
+</body>
+</html>
